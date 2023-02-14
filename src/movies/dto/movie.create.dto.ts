@@ -1,11 +1,12 @@
-import { User } from 'src/user/user.entity';
-
 export interface MovieCreateDTO {
-  movieName: string;
-  moviePoster: string;
-  movieImdb: string;
-  movieUser: User;
-  userId: number;
+  title: string;
+  year: Date;
+  genre: string;
+  director: string;
+  writer:string;
+  imdbRating: string;
+  imdbID:string;
+  posterUrl: string;
 
   /*
     if the parameter will be optional, we can put a '?' before the ':'

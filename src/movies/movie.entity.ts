@@ -7,17 +7,26 @@ export class Movie {
   id: number;
 
   @Column({ length: 100 })
-  movieName: string;
-
-  @Column({ length: 100 })
-  moviePoster: string;
+  title: string;
 
   @Column()
-  movieImdb: string;
+  year: Date;
 
-  @Column()
-  userId: number;
+  @Column({length: 100 })
+  genre: string;
 
-  @ManyToOne(() => User, (user) => user.movies)
-  user: User;
+  @Column({length: 100 } )
+  director: string;
+
+  @Column({length: 100 } )
+  writer:string;
+  
+  @Column({length: 100 })
+  imdbRating: string;
+
+  @Column({length: 100 })
+  imdbID:string;
+
+  @Column({length: 100 })
+  posterUrl: string;
 }

@@ -23,13 +23,15 @@ export class MovieController {
   async listAllMovies(): Promise<Movie[]>{
     return this.movieService.listAllMovies() 
   }
-  */
+  
 
   @Get('userMovies')
   async listUserMovies(@Query() query): Promise<Movie[]> {
     return this.movieService.listUserMovies(query);
   }
 
+  */
+ 
   @Post()
   async add(@Body() data: MovieCreateDTO): Promise<ResultsDTO> {
     return this.movieService.addMovie(data);
