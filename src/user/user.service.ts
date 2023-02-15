@@ -22,13 +22,13 @@ export class UserService {
 
     return this.userRepository
       .save(user)
-      .then((result) => {
+      .then(() => {
         return <ResultsDTO>{
           status: true,
           message: 'Usuário cadastrado com sucesso',
         };
       })
-      .catch((error) => {
+      .catch(() => {
         return <ResultsDTO>{
           status: false,
           message: 'Houve um erro ao cadastrar usuário',
