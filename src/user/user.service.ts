@@ -3,7 +3,7 @@ import { ResultsDTO } from 'src/dto/results.dto';
 import { Repository } from 'typeorm';
 import { UserCreateDTO } from './dto/user.create.dto';
 import { User } from './user.entity';
-import * as bcrypt from 'bcrypt';
+import * as bcrypt from 'bcryptjs';
 import { UserRepository } from './user.repository';
 
 @Injectable()
@@ -15,7 +15,7 @@ export class UserService {
   }
 
   async createUser(data: UserCreateDTO): Promise<ResultsDTO> {
-    let user = new User();
+    const user = new User();
     user.email = data.email;
     user.name = data.name;
     user.password = bcrypt.hashSync(data.password, 8);

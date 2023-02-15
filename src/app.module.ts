@@ -18,15 +18,10 @@ import { User } from './user/user.entity';
       type: 'postgres',
       host: 'localhost',
       port: 5432,
-      username: 'master',
+      username: 'postgres',
       password: 'master',
       database: 'moovy',
-      entities: [
-        User,
-        Token,
-        Movie,
-        Library,
-      ],
+      entities: [User, Token, Movie, Library],
       synchronize: true, //Todas as vezes que eu rodar o nest tentará sincronizar as tabelas = Não usar em produção
     }),
   ],
