@@ -21,7 +21,7 @@ export class UserController {
     private authService: AuthService,
   ) {}
 
-  @UseGuards(JwtAuthGuard)
+  //@UseGuards(JwtAuthGuard)
   @Get()
   async listAllUsers(): Promise<User[]> {
     return this.userService.listAllUsers();

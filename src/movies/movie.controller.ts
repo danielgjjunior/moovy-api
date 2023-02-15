@@ -31,9 +31,15 @@ export class MovieController {
   }
 
   */
- 
+ /*
   @Post()
   async add(@Body() data: MovieCreateDTO): Promise<ResultsDTO> {
+    return this.movieService.addMovie(data);
+  }
+  */
+
+  @Post()
+  async addMovie(@Body() data: MovieCreateDTO): Promise<ResultsDTO> {
     return this.movieService.addMovie(data);
   }
 

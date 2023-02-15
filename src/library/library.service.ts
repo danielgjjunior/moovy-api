@@ -3,6 +3,14 @@ https://docs.nestjs.com/providers#services
 */
 
 import { Injectable } from '@nestjs/common';
+import { LibraryRepository } from './library.repository';
 
 @Injectable()
-export class LibraryService {}
+export class LibraryService {
+    constructor(private readonly libraryRepository: LibraryRepository) {}
+    
+
+
+
+
+}

@@ -1,10 +1,15 @@
+import { Library } from 'src/library/library.entity';
 import { User } from 'src/user/user.entity';
-import { Entity, Column, PrimaryGeneratedColumn, ManyToOne } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, Generated, PrimaryColumn, OneToMany } from 'typeorm';
+import { v4 as uuidv4 } from 'uuid';
+
+const uuid = uuidv4(); 
 
 @Entity()
 export class Movie {
-  @PrimaryGeneratedColumn()
-  id: number;
+  @PrimaryColumn('uuid')
+  @Generated("uuid")
+  id: string;
 
   @Column({ length: 100 })
   title: string;
@@ -29,4 +34,8 @@ export class Movie {
 
   @Column({length: 100 })
   posterUrl: string;
+
+  
+  @OneToMany(() => Library, (library) => library.movie)
+  library: Library[]
 }

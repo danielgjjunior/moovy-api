@@ -5,12 +5,12 @@ https://docs.nestjs.com/modules
 */
 
 import { Module } from '@nestjs/common';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { LibraryRepository } from './library.repository';
 
 @Module({
-  imports: [],
-  controllers: [
-        LibraryController, ],
-  providers: [
-        LibraryService, ],
+  imports: [TypeOrmModule.forFeature([LibraryRepository])],
+  controllers: [LibraryController],
+  providers: [LibraryService],
 })
 export class LibraryModule {}

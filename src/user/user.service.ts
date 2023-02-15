@@ -4,13 +4,11 @@ import { Repository } from 'typeorm';
 import { UserCreateDTO } from './dto/user.create.dto';
 import { User } from './user.entity';
 import * as bcrypt from 'bcrypt';
+import { UserRepository } from './user.repository';
 
 @Injectable()
 export class UserService {
-  constructor(
-    @Inject('USER_REPOSITORY')
-    private userRepository: Repository<User>,
-  ) {}
+  constructor(private readonly userRepository: UserRepository) {}
 
   async listAllUsers(): Promise<User[]> {
     return this.userRepository.find();
@@ -38,6 +36,6 @@ export class UserService {
       });
   }
   async findOne(email: string): Promise<User | undefined> {
-    return this.userRepository.findOneBy({ email: email });
+    return this.userRepository.findOne({ email: email });
   }
 }
