@@ -7,24 +7,20 @@ import {
 } from '@nestjs/common';
 import { AuthService } from 'src/auth/auth.service';
 import { UserService } from 'src/user/user.service';
-
-import { Repository } from 'typeorm';
-
-import { Token } from './token.entity';
 import { TokenRepository } from './token.repository';
 
 @Injectable()
 export class TokenService {
   constructor(
     private readonly tokenRepository: TokenRepository,
-    
+
     private userService: UserService,
     @Inject(forwardRef(() => AuthService))
     private authService: AuthService,
   ) {}
 
   async saveToken(hash: string, username: string) {
-    let objectToken = await this.tokenRepository.findOne({
+    const objectToken = await this.tokenRepository.findOne({
       username: username,
     });
     if (objectToken) {
@@ -40,9 +36,9 @@ export class TokenService {
   }
 
   async refreshToken(oldToken: string) {
-    let objectToken = await this.tokenRepository.findOne({ hash: oldToken });
+    const objectToken = await this.tokenRepository.findOne({ hash: oldToken });
     if (objectToken) {
-      let user = await this.userService.findOne(objectToken.username);
+      const user = await this.userService.findOne(objectToken.username);
 
       return this.authService.login(user);
     } else {

@@ -1,6 +1,7 @@
 import { Injectable, Inject, Query } from '@nestjs/common';
 import { title } from 'process';
 import { ResultsDTO } from 'src/dto/results.dto';
+import { Library } from 'src/library/library.entity';
 import { LibraryService } from 'src/library/library.service';
 import { Repository } from 'typeorm';
 import { MovieCreateDTO } from './dto/movie.create.dto';
@@ -9,13 +10,20 @@ import { MovieRepository } from './movie.repository';
 
 @Injectable()
 export class MovieService {
-  constructor(private readonly movieRepository: MovieRepository) {}
+  constructor(
+    private readonly movieRepository: MovieRepository,
+    private readonly libraryService: LibraryService,
+  ) {}
 
   async listAllMovies(): Promise<Movie[]> {
     return this.movieRepository.find();
   }
 
   /*
+  async addMovie(imdbID) {
+    return this.movieRepository.findOne({ imdbID: imdbID });
+  }
+
   async listUserMovies(query): Promise<Movie[]> {
     console.log(query.userId);
     console.log();
@@ -29,29 +37,13 @@ export class MovieService {
         },
       },
     });
+    
   }
 
   */
 
-  async addMovie(data: MovieCreateDTO) {
-    await this.movieRepository.findOne({});
-    await this.movieRepository.findOne(data.imdbID);
-    console.log(this.movieRepository.findOne);
-    if (this.movieRepository.findOne) {
-      return <ResultsDTO>{
-        status: true,
-        message: 'Sucesso',
-      };
-    } else {
-      return <ResultsDTO>{
-        status: false,
-        message: 'Houve um erro ao adicionar o filme na biblioteca',
-      };
-    }
-  }
-
-  async save(data: MovieCreateDTO): Promise<ResultsDTO> {
-    let movie = new Movie();
+  async save(data: MovieCreateDTO, userID): Promise<ResultsDTO | void> {
+    const movie = new Movie();
     (movie.title = data.title),
       (movie.year = data.year),
       (movie.genre = data.genre),
@@ -61,22 +53,24 @@ export class MovieService {
       (movie.imdbID = data.imdbID),
       (movie.posterUrl = data.posterUrl);
 
-    return this.movieRepository
-      .save(movie)
-      .then((result) => {
-        return <ResultsDTO>{
-          status: true,
-          message: 'Filme Adicionado com sucesso',
-        };
-      })
-      .catch((error) => {
-        return <ResultsDTO>{
-          status: false,
-          message: 'Houve um erro ao adicionar o filme na biblioteca',
-        };
-      });
-  }
+    let verifyifExists = await this.movieRepository.findOne({
+      imdbID: movie.imdbID,
+    });
+    console.log(userID);
+    if (verifyifExists) {
+      return this.libraryService.adduserMovie(userID.userId, verifyifExists.id);
+    } else {
+      this.movieRepository.save(movie).then(async (result) => {
+        verifyifExists = await this.movieRepository.findOne({
+          imdbID: movie.imdbID,
+        });
+        const user = userID.userId;
+        const movieID = verifyifExists.id;
 
+        return this.libraryService.adduserMovie(user, movieID);
+      });
+    }
+  }
   async remove(movieId) {
     console.log(movieId);
     return this.movieRepository.delete(movieId);

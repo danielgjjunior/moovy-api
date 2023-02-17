@@ -19,10 +19,7 @@ export class MovieController {
   constructor(private readonly movieService: MovieService) {}
 
   /*
-  @Get()
-  async listAllMovies(): Promise<Movie[]>{
-    return this.movieService.listAllMovies() 
-  }
+  
   
 
   @Get('userMovies')
@@ -31,16 +28,28 @@ export class MovieController {
   }
 
   */
- /*
+  /*
   @Post()
   async add(@Body() data: MovieCreateDTO): Promise<ResultsDTO> {
     return this.movieService.addMovie(data);
   }
+
+   @Get()
+  async addMovie(@Query() query, @Body() user): Promise<Movie> {
+    return this.movieService.addMovie(query.imdbID);
+  }
   */
 
   @Post()
-  async addMovie(@Body() data: MovieCreateDTO): Promise<ResultsDTO> {
-    return this.movieService.addMovie(data);
+  async save(
+    @Body() data: MovieCreateDTO,
+    @Query() userID,
+  ): Promise<ResultsDTO | void> {
+    return this.movieService.save(data, userID);
+  }
+  @Get()
+  async listAllMovies(): Promise<Movie[]> {
+    return this.movieService.listAllMovies();
   }
 
   @Delete()

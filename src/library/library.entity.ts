@@ -20,13 +20,13 @@ export class Library {
   id: string;
 
   @Column()
-  user_id: string;
+  userId: string;
 
   @Column()
-  movie_id: string;
+  movieId: string;
 
-  @Column()
-  review: string;
+  @Column({ nullable: true })
+  review?: string;
 
   @ManyToOne(() => User, (user) => user.library)
   user: User;

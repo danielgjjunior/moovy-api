@@ -3,9 +3,9 @@ export interface MovieCreateDTO {
   year: Date;
   genre: string;
   director: string;
-  writer:string;
+  writer: string;
   imdbRating: string;
-  imdbID:string;
+  imdbID: string;
   posterUrl: string;
 
   /*
