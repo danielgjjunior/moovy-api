@@ -13,6 +13,8 @@ import { ResultsDTO } from '../dto/results.dto';
 import { UserCreateDTO } from './dto/user.create.dto';
 import { User } from './user.entity';
 import { UserService } from './user.service';
+import { UserMapper } from './mapper/user.mapper';
+import { UserReturnDTO } from './dto/user.return.dto';
 
 @Controller('user')
 export class UserController {
@@ -27,8 +29,9 @@ export class UserController {
     return this.userService.listAllUsers();
   }
   @Post()
-  async cadastrar(@Body() data: UserCreateDTO): Promise<ResultsDTO> {
-    return this.userService.createUser(data);
+  async cadastrar(@Body() data: UserCreateDTO): Promise<UserReturnDTO> {
+    const res = await this.userService.createUser(data);
+    return UserMapper.fromEntityToDto(res);
   }
 
   @UseGuards(AuthGuard('local'))

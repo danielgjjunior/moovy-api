@@ -1,17 +1,6 @@
 import { Movie } from 'src/movies/movie.entity';
 import { User } from 'src/user/user.entity';
-import {
-  Entity,
-  Column,
-  PrimaryGeneratedColumn,
-  OneToMany,
-  Generated,
-  PrimaryColumn,
-  ManyToOne,
-} from 'typeorm';
-import { v4 as uuidv4 } from 'uuid';
-
-const uuid = uuidv4();
+import { Entity, Column, Generated, PrimaryColumn, ManyToOne } from 'typeorm';
 
 @Entity()
 export class Library {

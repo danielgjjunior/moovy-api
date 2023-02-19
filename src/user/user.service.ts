@@ -1,4 +1,4 @@
-import { Injectable, Inject } from '@nestjs/common';
+import { Injectable, Inject, ConflictException } from '@nestjs/common';
 import { ResultsDTO } from 'src/dto/results.dto';
 import { Repository } from 'typeorm';
 import { UserCreateDTO } from './dto/user.create.dto';
@@ -14,26 +14,22 @@ export class UserService {
     return this.userRepository.find();
   }
 
-  async createUser(data: UserCreateDTO): Promise<ResultsDTO> {
+  async createUser(data: UserCreateDTO): Promise<User> {
     const user = new User();
     user.email = data.email;
     user.name = data.name;
     user.password = bcrypt.hashSync(data.password, 8);
 
-    return this.userRepository
-      .save(user)
-      .then(() => {
-        return <ResultsDTO>{
-          status: true,
-          message: 'Usuário cadastrado com sucesso',
-        };
-      })
-      .catch(() => {
-        return <ResultsDTO>{
-          status: false,
-          message: 'Houve um erro ao cadastrar usuário',
-        };
-      });
+    const existentUSer = await this.userRepository.findOne({
+      email: data.email,
+    });
+    console.log(existentUSer);
+
+    if (!existentUSer) {
+      return this.userRepository.save(user);
+    } else {
+      throw new ConflictException('User already exists');
+    }
   }
   async findOne(email: string): Promise<User | undefined> {
     return this.userRepository.findOne({ email: email });

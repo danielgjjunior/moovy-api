@@ -1,16 +1,5 @@
-import {
-  Body,
-  Controller,
-  Get,
-  Post,
-  Query,
-  Request,
-  UseGuards,
-} from '@nestjs/common';
-import { Delete, Param } from '@nestjs/common/decorators';
+import { Body, Controller, Get, Post, Query, UseGuards } from '@nestjs/common';
 import { JwtAuthGuard } from 'src/auth/guards/auth.jwt.auth.guard';
-import { ResultsDTO } from '../dto/results.dto';
-import { MovieCreateDTO } from './dto/movie.create.dto';
 import { Movie } from './movie.entity';
 import { MovieService } from './movie.service';
 
@@ -18,42 +7,8 @@ import { MovieService } from './movie.service';
 export class MovieController {
   constructor(private readonly movieService: MovieService) {}
 
-  /*
-  
-  
-
-  @Get('userMovies')
-  async listUserMovies(@Query() query): Promise<Movie[]> {
-    return this.movieService.listUserMovies(query);
-  }
-
-  */
-  /*
-  @Post()
-  async add(@Body() data: MovieCreateDTO): Promise<ResultsDTO> {
-    return this.movieService.addMovie(data);
-  }
-
-   @Get()
-  async addMovie(@Query() query, @Body() user): Promise<Movie> {
-    return this.movieService.addMovie(query.imdbID);
-  }
-  */
-
-  @Post()
-  async save(
-    @Body() data: MovieCreateDTO,
-    @Query() userID,
-  ): Promise<ResultsDTO | void> {
-    return this.movieService.save(data, userID);
-  }
-  @Get()
+  @Get() //Somente para testes
   async listAllMovies(): Promise<Movie[]> {
     return this.movieService.listAllMovies();
-  }
-
-  @Delete()
-  remove(@Query() query) {
-    return this.movieService.remove(query.movieId);
   }
 }

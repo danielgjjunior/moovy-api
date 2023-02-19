@@ -1,4 +1,4 @@
-import { Body, Controller, Put } from '@nestjs/common';
+import { Body, Controller, HttpException, Put } from '@nestjs/common';
 import { RefreshTokenDto } from './dto/refresh.token.dto';
 import { TokenService } from './token.service';
 
@@ -6,8 +6,10 @@ import { TokenService } from './token.service';
 export class TokenController {
   constructor(private tokenService: TokenService) {}
 
-  @Put('refresh')
-  async refreshToken(@Body() data: RefreshTokenDto) {
+  @Put()
+  async refreshToken(
+    @Body() data: RefreshTokenDto,
+  ): Promise<{ access_token: string } | HttpException> {
     return this.tokenService.refreshToken(data.oldToken);
   }
 }
