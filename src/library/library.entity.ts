@@ -15,7 +15,10 @@ export class Library {
   movieId: string;
 
   @Column({ nullable: true })
-  review?: string;
+  audioPath?: string;
+
+  @Column({ nullable: true })
+  audioName?: string;
 
   @ManyToOne(() => User, (user) => user.library)
   user: User;

@@ -8,7 +8,8 @@ export class LibraryMapper {
     dto.id = entity.id;
     dto.movie_id = entity.movieId;
     dto.user_id = entity.userId;
-    dto.review = entity.review;
+    dto.audioPath = entity.audioPath;
+    dto.audioName = entity.audioName;
 
     return dto;
   }
