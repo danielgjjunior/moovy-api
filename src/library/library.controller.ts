@@ -47,6 +47,12 @@ export class LibraryController {
 
   //audios
 
+  @Get('userMovies')
+  async getUserMovies(@Query('userId') userId: string) {
+    const userMovies = await this.getUserMovies(userId);
+    return userMovies;
+  }
+
   @Post('audioUpload')
   @UseInterceptors(
     FileInterceptor('audio', {

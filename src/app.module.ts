@@ -7,12 +7,14 @@ import { Library } from './library/library.entity';
 import { Movie } from './movies/movie.entity';
 import { Token } from './token/token.entity';
 import { User } from './user/user.entity';
+import { UserModule } from './user/user.module';
 
 @Module({
   imports: [
     LibraryModule,
     AuthModule,
     MovieModule,
+    UserModule,
     TypeOrmModule.forRoot({
       type: 'postgres',
       host: 'localhost',
@@ -20,7 +22,7 @@ import { User } from './user/user.entity';
       username: 'master',
       password: 'master',
       database: 'moovy',
-      entities: [User, Token, Movie, Library],
+      entities: [User, Token, Library, Movie],
       synchronize: true, //Todas as vezes que eu rodar o nest tentará sincronizar as tabelas = Não usar em produção
     }),
   ],

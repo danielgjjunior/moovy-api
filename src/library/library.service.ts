@@ -7,16 +7,19 @@ import { MovieCreateDTO } from 'src/movies/dto/movie.create.dto';
 import { MovieService } from 'src/movies/movie.service';
 
 import { Library } from './library.entity';
-import { LibraryRepository } from './library.repository';
 import { LibraryDto } from './dto/library.dto';
 import { LibraryMapper } from './mapper/library.mapper';
 import { unlink } from 'fs/promises';
+import { Movie } from 'src/movies/movie.entity';
+import { MovieRepository } from 'src/movies/movie.repository';
+import { LibraryRepository } from './library.repository';
 
 @Injectable()
 export class LibraryService {
   constructor(
     private readonly libraryRepository: LibraryRepository,
     private readonly movieService: MovieService,
+    private readonly movieRepository: MovieRepository,
   ) {}
 
   async listUserMovies(query): Promise<Library[]> {
@@ -25,7 +28,23 @@ export class LibraryService {
     });
   }
 
+  async getUserMovies(userId: string): Promise<Movie[]> {
+    const userLibraries = await this.listUserMovies(userId);
+
+    const userMovies = await Promise.all(
+      userLibraries.map(async (userLibrary) => {
+        const movie = await this.movieRepository.findOne({
+          id: userLibrary.movieId,
+        });
+        return movie;
+      }),
+    );
+
+    return userMovies;
+  }
+
   async saveUserMovie(data: MovieCreateDTO, userID): Promise<Library> {
+    console.log(data, userID);
     const callRegisterMovie = await this.movieService.saveMovie(data);
     if (callRegisterMovie) {
       return await this.adduserMovie(userID.userId, callRegisterMovie);

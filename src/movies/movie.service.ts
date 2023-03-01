@@ -1,15 +1,12 @@
-import { Injectable } from '@nestjs/common';
+import { forwardRef, Inject, Injectable } from '@nestjs/common';
 import { MovieCreateDTO } from './dto/movie.create.dto';
 import { Movie } from './movie.entity';
 import { MovieRepository } from './movie.repository';
+import { LibraryService } from '../library/library.service';
 
 @Injectable()
 export class MovieService {
   constructor(private readonly movieRepository: MovieRepository) {}
-
-  async listAllMovies(): Promise<Movie[]> {
-    return this.movieRepository.find();
-  }
 
   async saveMovie(data: MovieCreateDTO) {
     const movie = new Movie();

@@ -40,7 +40,7 @@ export class Movie {
   @Column({ length: 100 })
   imdbID: string;
 
-  @Column({ length: 100 })
+  @Column({ length: 400 })
   posterUrl: string;
 
   @OneToMany(() => Library, (library) => library.movie)
