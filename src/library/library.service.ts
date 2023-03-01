@@ -29,7 +29,8 @@ export class LibraryService {
   }
 
   async getUserMovies(userId: string): Promise<Movie[]> {
-    const userLibraries = await this.listUserMovies(userId);
+    const userLibraries = await this.listUserMovies({ userId });
+    console.log(userLibraries.length);
 
     const userMovies = await Promise.all(
       userLibraries.map(async (userLibrary) => {

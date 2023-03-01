@@ -49,7 +49,7 @@ export class LibraryController {
 
   @Get('userMovies')
   async getUserMovies(@Query('userId') userId: string) {
-    const userMovies = await this.getUserMovies(userId);
+    const userMovies = await this.libraryService.getUserMovies(userId);
     return userMovies;
   }
 
