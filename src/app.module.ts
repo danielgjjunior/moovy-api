@@ -23,7 +23,7 @@ import { UserModule } from './user/user.module';
       password: 'master',
       database: 'moovy',
       entities: [User, Token, Library, Movie],
-      synchronize: true, //Todas as vezes que eu rodar o nest tentará sincronizar as tabelas = Não usar em produção
+      synchronize: true,
     }),
   ],
   controllers: [],

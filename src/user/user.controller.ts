@@ -9,7 +9,6 @@ import {
 import { AuthGuard } from '@nestjs/passport';
 import { JwtAuthGuard } from 'src/auth/guards/auth.jwt.auth.guard';
 import { AuthService } from 'src/auth/auth.service';
-import { ResultsDTO } from '../dto/results.dto';
 import { UserCreateDTO } from './dto/user.create.dto';
 import { User } from './user.entity';
 import { UserService } from './user.service';

@@ -45,8 +45,6 @@ export class LibraryController {
     return this.libraryService.remove(query);
   }
 
-  //audios
-
   @Get('userMovies')
   async getUserMovies(@Query('userId') userId: string) {
     const userMovies = await this.libraryService.getUserMovies(userId);
@@ -61,7 +59,7 @@ export class LibraryController {
         filename: (req, file, cb) => {
           const randomName = Array(32)
             .fill(null)
-            .map(() => Math.round(Math.random() * 16).toString(16)) //sequência de caracteres aleatórios para nome do arquivo.
+            .map(() => Math.round(Math.random() * 16).toString(16))
             .join('');
           return cb(null, `${randomName}${extname(file.originalname)}`);
         },

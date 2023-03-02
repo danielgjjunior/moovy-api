@@ -23,7 +23,6 @@ export class UserService {
     const existentUSer = await this.userRepository.findOne({
       email: data.email,
     });
-    console.log(existentUSer);
 
     if (!existentUSer) {
       return this.userRepository.save(user);
